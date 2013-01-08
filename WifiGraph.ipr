@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AntConfiguration">
+    <defaultAnt bundledAnt="true" />
+    <buildFile url="file://$PROJECT_DIR$/build.xml">
+      <additionalClassPath />
+      <antReference projectDefault="true" />
+      <customJdkName value="" />
+      <maximumHeapSize value="128" />
+      <maximumStackSize value="2" />
+      <properties />
+    </buildFile>
+  </component>
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Javac" />
     <excludeFromCompile>
@@ -154,7 +165,11 @@
     </group>
   </component>
   <component name="ProjectDictionaryState">
-    <dictionary name="Jon" />
+    <dictionary name="Jon">
+      <words>
+        <w>inflater</w>
+      </words>
+    </dictionary>
   </component>
   <component name="ProjectModuleManager">
     <modules>
@@ -166,6 +181,29 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="" vcs="" />
+  </component>
+  <component name="libraryTable">
+    <library name="GraphView-3.0">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/GraphView-3.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="file://$PROJECT_DIR$/../git/GraphView/doc" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../git/GraphView/src" />
+      </SOURCES>
+    </library>
+    <library name="StandOut2">
+      <CLASSES>
+        <root url="jar://$PROJECT_DIR$/libs/StandOut.jar!/" />
+      </CLASSES>
+      <JAVADOC />
+      <SOURCES>
+        <root url="file://$PROJECT_DIR$/../git/StandOut/library/src" />
+        <root url="file://$PROJECT_DIR$/../git/StandOut/library/gen" />
+      </SOURCES>
+    </library>
   </component>
 </project>
 

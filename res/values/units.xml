@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="unit_params_dBm">
+		<item>[dBm]</item> <!-- unit label -->
+	    <item>30</item>    <!-- default value -->
+	    <item>3</item>     <!-- v-tics: max digits -->
+	    <item>5</item>     <!-- v-tics: tics step -->
+	    <item>%.2f</item>  <!-- v-tics: format -->
+	    <item>10</item>    <!-- main plot: major tics step -->
+	    <item>1</item>     <!-- main plot: minor tics step -->
+	    <item>5</item>     <!-- main plot: tics stride -->
+	    <item>100</item>   <!-- sub plot: major tics step -->
+	    <item>10</item>    <!-- sub plot: minor tics step -->
+	    <item>10</item>    <!-- sub plot: tics stride -->
+    </array>
+  	
+    <array name="unit_params_RSSI">
+	    <item>[RSSI]</item> <!-- unit label -->
+	    <item>1</item>     <!-- default value -->
+	    <item>4</item>     <!-- v-tics: max digits -->
+	    <item>10</item> <!-- v-tics: tics step -->
+	    <item>%.0f</item>  <!-- v-tics: format -->
+	    <item>10</item>  <!-- main plot: major tics step -->
+	    <item>5</item> <!-- main plot: minor tics step -->
+	    <item>5</item> <!-- main plot: tics stride -->
+	    <item>100</item>   <!-- sub plot: major tics step -->
+	    <item>10</item>  <!-- sub plot: minor tics step -->
+	    <item>10</item>  <!-- sub plot: tics stride -->
+  	</array>
+    
+  	<array name="unit_params">
+	    <item>@array/unit_params_dBm</item>
+    	<item>@array/unit_params_RSSI</item>
+	</array>    
+</resources>

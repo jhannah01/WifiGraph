@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="expandableListIndicatorLeft">0sp</dimen>
+    <dimen name="expandableListIndicatorRight">10sp</dimen>
+    <dimen name="indicatorPadding">0dp</dimen>
+</resources>

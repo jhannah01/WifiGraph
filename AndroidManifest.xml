@@ -1,16 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.blueodin.WifiGraph">
+    package="com.blueodin.wifigraphs" >
 
-    <uses-sdk android:minSdkVersion="17"/>
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
     <application
-        android:icon="@drawable/icon"
-        android:label="@string/app_name">
-        <activity android:name=".MainActivity">
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity android:name="com.blueodin.wifigraphs.MainActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service android:name="com.blueodin.wifigraphs.GraphWindow" />
+
+        <activity
+            android:name="com.blueodin.wifigraphs.GraphActivity"
+            android:label="@string/title_activity_graph"
+            android:parentActivityName="com.blueodin.wifigraphs.MainActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.blueodin.wifigraphs.MainActivity" />
+        </activity>
+        
+        <service android:name="com.blueodin.wifigraphs.WifiLockService" />
+            
+        <receiver android:name="com.blueodin.wifigraphs.WifiScanner"/>
+        
+        <receiver android:name="com.blueodin.wifigraphs.WifiStateReciever"/>
+                        
     </application>
+
 </manifest>

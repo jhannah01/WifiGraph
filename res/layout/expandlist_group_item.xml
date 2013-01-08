@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_group_item"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <TextView
+        android:id="@+id/textview_group_content"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="18dp"
+        android:drawableLeft="@drawable/ic_blue_wifi"
+        android:drawablePadding="@dimen/indicatorPadding"
+        android:gravity="center_vertical"
+        android:text="@string/filler_networkdetails"
+        android:textSize="20sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginRight="2dp"
+        android:layout_toLeftOf="@+id/textview_group_lasttime"
+        android:labelFor="@id/textview_child_timestamp"
+        android:text="@string/constant_last_seen"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textSize="14sp"/>
+
+    <TextView
+        android:id="@+id/textview_group_lasttime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:gravity="right"
+        android:text="@string/filler_timestamp"
+        android:textSize="13sp" />
+
+</RelativeLayout>
