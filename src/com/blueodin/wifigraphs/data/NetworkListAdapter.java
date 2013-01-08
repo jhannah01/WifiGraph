@@ -24,14 +24,15 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class NetworkListAdapter extends BaseExpandableListAdapter {	
 	private Context mContext;
-	private ArrayList<NetworkEntry> mNetworks;
-	private HashMap<NetworkEntry,NetworkScanEntry> mNetworkList = new HashMap<NetworkListAdapter.NetworkEntry, NetworkListAdapter.NetworkScanEntry>();
+	private ArrayList<NetworkScanGroup> mGroups;
+	private HashMap<NetworkScanGroup,NetworkResultEntry> mNetworkList = new HashMap<NetworkListAdapter.NetworkScanGroup, NetworkListAdapter.NetworkResultEntry>();
 
-	public static class NetworkScanEntry implements Comparable<NetworkEntry> {
+	public static class NetworkResultEntry implements Comparable<NetworkScanGroup> {
 		private String mBSSID;
 		private String mSSID;
 		private int mLevel = 0;
@@ -39,20 +40,19 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		private int mFreqency = 0;
 		private String mCapabilities = "";
 		
-		public NetworkScanEntry(String bssid, String ssid) {
+		public NetworkResultEntry(String bssid, String ssid) {
 			this.mBSSID = bssid;
 			this.mSSID = ssid;
 		}
 		
-		@SuppressLint("NewApi")
-		public NetworkScanEntry(ScanResult result) {
+		public NetworkResultEntry(ScanResult result) {
 			this(result.BSSID, result.SSID, result.level, result.capabilities, result.frequency);
 			
-			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
-				this.mTimestamp = result.timestamp;
+			/*if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
+				this.mTimestamp = result.timestamp;*/
 		}
 		
-		public NetworkScanEntry(String bssid, String ssid, int level, String capabilities, int freqency) {
+		public NetworkResultEntry(String bssid, String ssid, int level, String capabilities, int freqency) {
 			this(bssid, ssid);
 			this.mLevel = level;
 			this.mCapabilities = capabilities;
@@ -60,7 +60,7 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 			this.mTimestamp = System.currentTimeMillis();
 		}
 		
-		public NetworkScanEntry(String bssid, String ssid, int level, String capabilities, int freqency, long timestamp) {
+		public NetworkResultEntry(String bssid, String ssid, int level, String capabilities, int freqency, long timestamp) {
 			this(bssid, ssid, level, capabilities, freqency);
 			this.mTimestamp = timestamp;
 		}
@@ -116,7 +116,7 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		
 		@Override
 		public String toString() {
-			return String.format("Level: %d dBm | Frequency: %d MHz | Capabilities: %s | SSID: %s", this.mLevel, this.mFreqency, this.getHumanReadableSecurityInfo(), this.mSSID);
+			return String.format("Frequency: %d MHz, SSID: %s, Capabilities: %s", this.mFreqency, this.mLevel, this.mSSID, this.getHumanReadableSecurityInfo());
 		}
 		
 		public String getFormattedTimestamp() {
@@ -127,26 +127,38 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		}
 
 		@Override
-		public int compareTo(NetworkEntry o) {
+		public int compareTo(NetworkScanGroup o) {
 			if(!this.mSSID.equals(o.getSSID()))
 				return this.mSSID.compareTo(o.getSSID());
 			
 			return this.mBSSID.compareTo(o.getBSSID());
 		}
+		
+		@Override
+		public boolean equals(Object o) {
+			if(!(o instanceof NetworkScanGroup))
+				return false;
+			
+			NetworkScanGroup group = (NetworkScanGroup)o;
+			if(group.getBSSID().equals(this.mBSSID) && group.getSSID().equals(this.mSSID))
+				return true;
+			
+			return false;
+		}
 	}
 	
-	public static class NetworkEntry implements Comparable<NetworkEntry> {
+	public static class NetworkScanGroup implements Comparable<NetworkScanGroup> {
 		private String mBSSID;
 		private String mSSID;
-		private ArrayList<NetworkScanEntry> mItems;
+		private ArrayList<NetworkResultEntry> mItems;
 		
-		public NetworkEntry(String bssid, String ssid) {
+		public NetworkScanGroup(String bssid, String ssid) {
 			this.mBSSID = bssid;
 			this.mSSID = ssid;
-			this.mItems = new ArrayList<NetworkScanEntry>();
+			this.mItems = new ArrayList<NetworkResultEntry>();
 		}
 		
-		public NetworkEntry(String bssid, String ssid, ArrayList<NetworkScanEntry> networks) {
+		public NetworkScanGroup(String bssid, String ssid, ArrayList<NetworkResultEntry> networks) {
 			this(bssid, ssid);
 			this.mItems = networks;
 		}
@@ -167,19 +179,19 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 			this.mSSID = ssid;
 		}
 		
-		public ArrayList<NetworkScanEntry> getItems() {
+		public ArrayList<NetworkResultEntry> getItems() {
 			return mItems;
 		}
 		
-		public void setItems(ArrayList<NetworkScanEntry> items) {
+		public void setItems(ArrayList<NetworkResultEntry> items) {
 			this.mItems = items;
 		}
 		
-		public NetworkScanEntry getLastEntry() {
+		public NetworkResultEntry getLastEntry() {
 			long ts = 0;
-			NetworkScanEntry lastEntry = null;
+			NetworkResultEntry lastEntry = null;
 			
-			for(NetworkScanEntry entry : mItems) {
+			for(NetworkResultEntry entry : mItems) {
 				if(entry.getTimestamp() > ts)
 					lastEntry = entry;
 				ts = entry.getTimestamp();
@@ -189,7 +201,7 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		}
 
 		public String getLastTimestamp() {
-			NetworkScanEntry lastEntry = getLastEntry();
+			NetworkResultEntry lastEntry = getLastEntry();
 			if(lastEntry == null)
 				return "Unknown";
 			
@@ -227,7 +239,7 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		}
 
 		@Override
-		public int compareTo(NetworkEntry o) {
+		public int compareTo(NetworkScanGroup o) {
 			if(!this.mSSID.equals(o.getSSID()))
 				return this.mSSID.compareTo(o.getSSID());
 			
@@ -235,54 +247,87 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		}
 	}
 	
-	public NetworkListAdapter(Context context, ArrayList<NetworkEntry> networks) {
+	public NetworkListAdapter(Context context, ArrayList<NetworkScanGroup> networks) {
 		this.mContext = context;
-		this.mNetworks = networks;
+		this.mGroups = networks;
 	}
 	
-	public void addItem(NetworkScanEntry item, NetworkEntry network) {
-		if (!mNetworks.contains(network))
-			mNetworks.add(network);
+	public void addItem(NetworkResultEntry item, NetworkScanGroup network) {
+		if (!mGroups.contains(network))
+			mGroups.add(network);
 
-		int index = mNetworks.indexOf(network);
-		ArrayList<NetworkScanEntry> ch = mNetworks.get(index).getItems();
+		int index = mGroups.indexOf(network);
+		ArrayList<NetworkResultEntry> ch = mGroups.get(index).getItems();
 		ch.add(item);
-		mNetworks.get(index).setItems(ch);
+		mGroups.get(index).setItems(ch);
 	}
 	
-	public Object getChild(int groupPosition, int childPosition) {
-		ArrayList<NetworkScanEntry> chList = mNetworks.get(groupPosition).getItems();
+	public NetworkResultEntry getChild(int groupPosition, int childPosition) {
+		ArrayList<NetworkResultEntry> chList = mGroups.get(groupPosition).getItems();
 		return chList.get(childPosition);
 	}
-
+	
 	public long getChildId(int groupPosition, int childPosition) {
 		return childPosition;
 	}
 
 	public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View view, ViewGroup parent) {
-		NetworkScanEntry child = (NetworkScanEntry) getChild(groupPosition, childPosition);
+		NetworkResultEntry child = (NetworkResultEntry) getChild(groupPosition, childPosition);
 		
 		if (view == null) {
 			LayoutInflater infalInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = infalInflater.inflate(R.layout.expandlist_child_item, null);
 		}
 		
-		TextView tvTimestamp = (TextView) view.findViewById(R.id.textview_child_timestamp);
-		TextView tvContent = (TextView) view.findViewById(R.id.textview_child_details);
+		TextView textViewTimestamp = (TextView) view.findViewById(R.id.textview_child_timestamp);
+		TextView textViewContent = (TextView) view.findViewById(R.id.textview_child_details);
+		TextView textViewLevel = (TextView) view.findViewById(R.id.textview_child_level);
+		TextView textViewCount = (TextView) view.findViewById(R.id.textview_child_count);
 		
-		tvTimestamp.setText(child.getFormattedTimestamp());
-		tvContent.setText(child.toString());
+		textViewTimestamp.setText(child.getFormattedTimestamp());
+		textViewContent.setText(child.toString());
+		textViewLevel.setText(String.format("%d dBm", child.getLevel()));
+		textViewCount.setText(String.format("#%d",childPosition));
 		
 		return view;
 	}
 
 	public int getChildrenCount(int groupPosition) {
-		ArrayList<NetworkScanEntry> chList = mNetworks.get(groupPosition).getItems();
+		ArrayList<NetworkResultEntry> chList = mGroups.get(groupPosition).getItems();
 		return chList.size();
 	}
 
-	public NetworkEntry getGroupByBSSID(String bssid) {
-		for(NetworkEntry entry : mNetworks) {
+	public List<NetworkResultEntry> getAllChildren() {
+		List<NetworkResultEntry> results = new ArrayList<NetworkListAdapter.NetworkResultEntry>();
+		
+		for(NetworkScanGroup group : mGroups)
+			results.addAll(group.getItems());
+		
+		return results;
+	}
+	
+	public NetworkScanGroup getGroup(int groupPosition) {
+		return mGroups.get(groupPosition);
+	}
+	
+	public NetworkScanGroup getGroup(String bssid, String ssid) {
+		for(NetworkScanGroup group : mGroups)
+			if(group.getBSSID().equals(bssid) && group.getSSID().equals(ssid))
+				return group;
+		
+		return null;
+	}
+	
+	public int getGroupCount() {
+		return mGroups.size();
+	}
+
+	public long getGroupId(int groupPosition) {
+		return groupPosition;
+	}
+	
+	public NetworkScanGroup getGroupByBSSID(String bssid) {
+		for(NetworkScanGroup entry : mGroups) {
 			if(entry.getBSSID().equals(bssid))
 				return entry;
 		}
@@ -290,35 +335,37 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		return null;
 	}
 	
-	public Object getGroup(int groupPosition) {
-		return mNetworks.get(groupPosition);
+	public NetworkScanGroup getGroupBySSID(String ssid) {
+		for(NetworkScanGroup entry : mGroups) {
+			if(entry.getSSID().equals(ssid))
+				return entry;
+		}
+		
+		return null;
 	}
-
-	public int getGroupCount() {
-		return mNetworks.size();
-	}
-
-	public long getGroupId(int groupPosition) {
-		return groupPosition;
-	}
-
 	public View getGroupView(int groupPosition, boolean isLastChild, View view, ViewGroup parent) {
-		NetworkEntry group = (NetworkEntry) getGroup(groupPosition);
+		NetworkScanGroup group = (NetworkScanGroup) getGroup(groupPosition);
 		
 		if (view == null) {
 			LayoutInflater inf = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			view = inf.inflate(R.layout.expandlist_group_item, null);
 		}
 		
-		TextView textViewLastTimestamp = (TextView) view.findViewById(R.id.textview_group_lasttime);
-		TextView textViewContent = (TextView) view.findViewById(R.id.textview_group_content);
+		TextView textViewLastSeen = (TextView) view.findViewById(R.id.textview_group_lastseen);
+		TextView textViewBSSID = (TextView) view.findViewById(R.id.textview_group_bssid);
+		TextView textViewSSID = (TextView) view.findViewById(R.id.textview_group_ssid);
+		TextView textViewRecords = (TextView) view.findViewById(R.id.textview_group_records);
+		ImageView imageViewIcon = (ImageView) view.findViewById(R.id.imageview_group_icon);
 		
-		textViewLastTimestamp.setText(group.getLastTimestamp());
-		textViewContent.setText(group.toString());
-
+		textViewBSSID.setText(group.getBSSID());
+		textViewSSID.setText(group.getSSID());
+		textViewRecords.setText(String.format("%d", getChildrenCount(groupPosition)));
+		textViewLastSeen.setText(group.getLastTimestamp());
+		
 		Drawable dr = mContext.getResources().getDrawable(group.getListIcon());
 		dr.setBounds(0, 0, dr.getIntrinsicWidth(), dr.getIntrinsicHeight());
-		textViewContent.setCompoundDrawables(dr, null, null, null);
+		imageViewIcon.setImageDrawable(dr);
+		
 		return view;
 	}
 
@@ -326,7 +373,7 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 		return true;
 	}
 
-	public boolean isChildSelectable(int arg0, int arg1) {
+	public boolean isChildSelectable(int groupPosition, int childPosition) {
 		return true;
 	}
 }

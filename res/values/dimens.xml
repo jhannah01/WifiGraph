@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="expandableListIndicatorLeft">0sp</dimen>
-    <dimen name="expandableListIndicatorRight">10sp</dimen>
-    <dimen name="indicatorPadding">0dp</dimen>
+    <dimen name="listview_icon_size" >35dp</dimen>
+	<dimen name="listview_indicator_size">25dp</dimen>
+	<dimen name="listview_indicator_child_size">30dp</dimen>
+	<dimen name="text_small_size">10sp</dimen>
+	<dimen name="text_normal_size">20sp</dimen>
+	<dimen name="text_label_size">8sp</dimen>
 </resources>

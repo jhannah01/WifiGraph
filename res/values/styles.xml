@@ -16,7 +16,14 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+<style name="SignalBar" parent="@android:style/Widget.RatingBar">
+    <item name="android:progressDrawable">@drawable/ratingbar</item>
+    <item name="android:minHeight">25dip</item>
+    <item name="android:maxHeight">30dip</item>
+    <item name="android:isIndicator">true</item>
+</style>
 
     <style name="Theme.default" parent="@android:style/Theme.Holo.Light.DarkActionBar">
         <item name="android:actionBarItemBackground">@drawable/selectable_background_default</item>

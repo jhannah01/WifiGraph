@@ -13,10 +13,18 @@
     <string name="text_graph_header">Wifi Graph:</string>
     <string name="text_scanning_status_stopped">Current Scanning Status: Stopped.</string>
     <string name="text_scanning_status_running">Current Scanning Status: Running!</string>
-    <string name="filler_networkdetails">cwifi [00:11:22:33:44:55]</string>
-    <string name="filler_child_networkdetails">cwifi [00:11:22:33:44:55] = -45 dBm</string>
+    <string name="filler_group_ssid">cwifi</string>
+    <string name="filler_group_bssid">[00:11:22:33:44:55]</string>
+    <string name="filler_child_networkdetails">cwifi [00:11:22:33:44:55]</string>
     <string name="filler_timestamp">Jan 07, 2013 6:40PM</string>
-    <string name="constant_last_seen">Last Time Seen:</string>
+    <string name="filler_records">6</string>
+    <string name="filler_signal_level">-45 dBm</string>
+    <string name="filler_child_count">#15</string>
+    <string name="constant_label_records">Records:</string>
+    <string name="constant_label_lastseen">Last Seen:</string>
+    <string name="constant_label_level">Signal Strength:</string>
+    <string name="constant_label_timestamp">Timestamp:</string>
+    <string name="group_icon_descriptor">Wireless Security Indicator</string>
     
     
 </resources>

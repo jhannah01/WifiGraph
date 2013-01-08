@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.blueodin.wifigraphs.data.NetworkListAdapter;
-import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkScanEntry;
-import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkEntry;
+import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkResultEntry;
+import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkScanGroup;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 	private boolean isWifiScanning = false;
 
 	private NetworkListAdapter expListAdapter;
-	private ArrayList<NetworkEntry> expListItems;
+	private ArrayList<NetworkScanGroup> expListItems;
 	private ExpandableListView listViewDiscovered = null;
 	private WifiStateReciever wifiScanReceiver;
     
@@ -36,7 +36,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.main_activity);
         
         listViewDiscovered = (ExpandableListView)findViewById(R.id.listview_discovered);
-        expListItems = new ArrayList<NetworkEntry>();
+        expListItems = new ArrayList<NetworkScanGroup>();
         expListAdapter = new NetworkListAdapter(MainActivity.this, expListItems);
         listViewDiscovered.setAdapter(expListAdapter);
         wifiScanReceiver = new WifiStateReciever() {
@@ -103,17 +103,19 @@ public class MainActivity extends Activity {
     }
     
     public void doUpdateResults(List<ScanResult> results) {
+    	Log.d(TAG, "Got a call to update the results");
+    	
     	if(expListAdapter == null) {
     		Log.i(TAG, "Bailing on updating the scan results (null list adapter).");
     		return;
     	}
     	
     	for(ScanResult result : results) {
-    		NetworkEntry group = expListAdapter.getGroupByBSSID(result.BSSID);
-    		NetworkScanEntry entry = new NetworkScanEntry(result);
-    		if(group == null)
-    			group = new NetworkEntry(result.BSSID, result.SSID);
-    		group.getItems().add(entry);
+    		NetworkResultEntry entry = new NetworkResultEntry(result);
+    		NetworkScanGroup group = expListAdapter.getGroupByBSSID(result.BSSID);
+			if(group == null)
+    			group = new NetworkScanGroup(result.BSSID, result.SSID);
+    		
     		expListAdapter.addItem(entry, group);
     	}
     	

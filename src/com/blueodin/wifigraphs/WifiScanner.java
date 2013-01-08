@@ -64,8 +64,6 @@ public class WifiScanner extends BroadcastReceiver {
     
     @Override
 	public void onReceive(Context context, Intent intent) {
-    	Log.d(TAG, "Alarm received");
-        
     	WifiManager connManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
         
         if(connManager.isWifiEnabled()) {

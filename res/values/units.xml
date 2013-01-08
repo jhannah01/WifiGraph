@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <array name="unit_params_dBm">
+	<array name="unit_params_dBm">
 		<item>[dBm]</item> <!-- unit label -->
 	    <item>30</item>    <!-- default value -->
 	    <item>3</item>     <!-- v-tics: max digits -->

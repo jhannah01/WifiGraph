@@ -1,42 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_group_item"
-    android:layout_width="fill_parent"
+    android:id="@+id/layout_group"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content" >
 
+    <ImageView
+        android:id="@+id/imageview_group_icon"
+        android:layout_width="@dimen/listview_icon_size"
+        android:layout_height="@dimen/listview_icon_size"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/listview_indicator_size"
+        android:contentDescription="@string/group_icon_descriptor"
+        android:src="@drawable/ic_blue_wifi" />
     <TextView
-        android:id="@+id/textview_group_content"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="18dp"
-        android:drawableLeft="@drawable/ic_blue_wifi"
-        android:drawablePadding="@dimen/indicatorPadding"
-        android:gravity="center_vertical"
-        android:text="@string/filler_networkdetails"
-        android:textSize="20sp" />
-
-    <TextView
+        android:id="@+id/textview_group_ssid"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:layout_marginRight="2dp"
-        android:layout_toLeftOf="@+id/textview_group_lasttime"
-        android:labelFor="@id/textview_child_timestamp"
-        android:text="@string/constant_last_seen"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textSize="14sp"/>
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/imageview_group_icon"
+        android:text="@string/filler_group_ssid"
+        style="@style/NormalText" />
+    <TextView
+        android:id="@+id/textview_group_bssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/textview_group_ssid"
+        android:text="@string/filler_group_bssid"
+        style="@style/MediumText"/>
 
     <TextView
-        android:id="@+id/textview_group_lasttime"
+        android:id="@+id/label_group_records"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/textview_group_bssid"
+        android:labelFor="@+id/textview_group_records"
+        android:text="@string/constant_label_records"
+        style="@style/SmallText.Alt"/>
+
+    <TextView
+        android:id="@+id/textview_group_records"
+        style="@style/MediumText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:layout_toRightOf="@id/label_group_records"
+        android:text="@string/filler_records" />
+
+    <TextView
+        android:id="@+id/label_group_lastseen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/textview_group_lastseen"
+        android:text="@string/constant_label_lastseen"
+        style="@style/SmallText.Alt"/>
+
+    <TextView
+        android:id="@+id/textview_group_lastseen"
+        style="@style/MediumText.Italic"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
-        android:layout_gravity="center"
-        android:gravity="right"
-        android:text="@string/filler_timestamp"
-        android:textSize="13sp" />
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="2dp"
+        android:text="@string/filler_timestamp" />
 
 </RelativeLayout>
