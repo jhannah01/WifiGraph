@@ -1,65 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:android1="http://schemas.android.com/apk/res/android"
     android:id="@+id/layout_child"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-
+    android:layout_height="wrap_content"
+    android1:paddingLeft="@dimen/listview_indicator_child_size" >
+    
+    <TextView
+       android:id="@+id/label_child_level"
+	   style="@style/MediumText.Alt"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_alignParentLeft="true"
+	   android:text="@string/label_level" />    	
 	<TextView
-	    android:id="@+id/textview_child_count"
-	    style="@style/MediumText.Italic"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:layout_alignParentLeft="true"
-	    android:layout_centerVertical="true"
-	    android:layout_marginLeft="@dimen/listview_indicator_child_size"
-	    android:text="@string/filler_child_count" />
-
-    <TextView
-        android:id="@+id/textview_child_details"
-        style="@style/MediumText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/textview_child_count"
-        android:text="@string/filler_child_networkdetails" />
-   
-    <TextView
-        android:id="@+id/label_child_level"
-        style="@style/MediumText.Alt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="8dp"
-        android:layout_toRightOf="@+id/textview_child_details"
-        android:text="@string/constant_label_level" />
-    <TextView
-        android:id="@+id/textview_child_level"
-        style="@style/MediumText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="2dp"
-        android:layout_toRightOf="@+id/label_child_level"
-        android:text="@string/filler_signal_level" />
-
-    <TextView
-        android:id="@+id/label_child_timestamp"
-        style="@style/MediumText.Alt"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/textview_child_timestamp"
-        android:text="@string/constant_label_timestamp" />
-     <TextView
-         android:id="@+id/textview_child_timestamp"
-         style="@style/MediumText"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentRight="true"
-         android:layout_centerVertical="true"
-         android:layout_marginLeft="2dp"
-         android:layout_marginRight="25dp"
-         android:text="@string/filler_timestamp" />
-
+	   android:id="@+id/textview_child_level"
+	   style="@style/MediumText"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_marginLeft="2dp"
+	   android:layout_toRightOf="@+id/label_child_level"
+       android:text="@string/filler_signal_level" />
+	
+	<TextView
+       android:id="@+id/label_child_timestamp"
+	   style="@style/MediumText.Alt"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_toLeftOf="@+id/textview_child_timestamp"
+	   android:text="@string/label_timestamp" />
+	<TextView
+       android:id="@+id/textview_child_timestamp"
+	   style="@style/MediumText"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_marginLeft="2dp"
+	   android:layout_alignParentRight="true"
+	   android:layout_alignParentTop="true"
+	   android:text="@string/filler_timestamp" />
+	
+	<TextView
+	   android:id="@+id/label_child_details"
+	   style="@style/MediumText.Alt"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_below="@+id/label_child_level"
+	   android:layout_alignParentLeft="true"
+	   android:text="@string/label_results"/>
+	<TextView
+	   android:id="@+id/textview_child_details"
+	   style="@style/MediumText"
+	   android:layout_width="wrap_content"
+	   android:layout_height="wrap_content"
+	   android:layout_toRightOf="@+id/label_child_details"
+	   android:layout_alignBaseline="@+id/label_child_details"
+	   android:layout_marginLeft="2dp"
+	   android:text="@string/filler_child_networkdetails" />
 </RelativeLayout>

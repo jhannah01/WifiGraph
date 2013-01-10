@@ -1,0 +1,13 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	<PreferenceCategory 
+	    android:title="Graphing Prefernces"
+	    android:key="graphing_preferences">
+		<ListPreference
+        		android:defaultValue="@string/pref_default_graph_interval"
+        		android:entries="@array/graphIntervals"
+        		android:entryValues="@array/graphIntervalValues"
+        		android:key="graph_interval"
+        		android:title="Graphing Interval"
+        		android:summary="Interval between steps on the wireless graphs" />
+	</PreferenceCategory>
+</PreferenceScreen>

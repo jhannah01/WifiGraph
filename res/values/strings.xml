@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">WifiGraph</string>
+    
     <string name="btn_close">Kill All Graph Windows</string>
     <string name="btn_open">Popup Graph Window</string>
     <string name="btn_exit">Exit</string>
     <string name="btn_graphs">Start Graph Viewer</string>
     <string name="btn_graph_demo">Start GraphDemo</string>
     <string name="btn_toggle_scanning">Toggle Wifi Scanning</string>
-    <string name="menu_settings">Settings</string>
-    <string name="title_activity_graph">Wireless Graphs</string>
-    <string name="title_activity_graph_demo">Graph Demo</string>
-    <string name="text_graph_header">Wifi Graph:</string>
-    <string name="text_scanning_status_stopped">Current Scanning Status: Stopped.</string>
-    <string name="text_scanning_status_running">Current Scanning Status: Running!</string>
+    
+    <string name="menu_title_settings">Settings</string>
+    <string name="menu_title_toggle_scanning">Toggle Wifi Scanning</string>
+    <string name="menu_title_open_graph_activity">Detailed Graphs</string>
+    <string name="menu_title_new_graph_window">New Graph Window</string>
+    <string name="menu_title_close_graph_windows">Close all Graph Windows</string>
+    <string name="menu_title_exit">Exit</string>
+        
     <string name="filler_group_ssid">cwifi</string>
     <string name="filler_group_bssid">[00:11:22:33:44:55]</string>
     <string name="filler_child_networkdetails">cwifi [00:11:22:33:44:55]</string>
@@ -20,11 +23,28 @@
     <string name="filler_records">6</string>
     <string name="filler_signal_level">-45 dBm</string>
     <string name="filler_child_count">#15</string>
-    <string name="constant_label_records">Records:</string>
-    <string name="constant_label_lastseen">Last Seen:</string>
-    <string name="constant_label_level">Signal Strength:</string>
-    <string name="constant_label_timestamp">Timestamp:</string>
-    <string name="group_icon_descriptor">Wireless Security Indicator</string>
+    <string name="filler_content_label">Label:</string>
+    <string name="filler_content_text">Content Goes Here</string>
     
+    <string name="label_activity_graph">Wireless Graphs</string>
+    <string name="label_graph_header">Wifi Graph:</string>
+    <string name="label_scanning_status">Current Scanning Status:</string>
+    <string name="label_records">Records:</string>
+    <string name="label_lastseen">Last Seen:</string>
+    <string name="label_level">Signal Strength:</string>
+    <string name="label_timestamp">Timestamp:</string>
+    <string name="label_results">Results:</string>
+    <string name="label_scanning_stopped">Stopped.</string>
+    <string name="label_scanning_running">Running!</string>
+    <string name="label_wireless_icon">Wireless Security Indicator</string>
     
+    <string name="pref_header_general">General</string>
+    <string name="pref_header_graphs">Graphs</string>
+    
+    <string name="title_activity_graph">Wireless Graphs</string>
+    <string name="title_activity_settings">WifiGraph Settings</string>
+    
+    <string name="pref_default_scan_interval">5000</string>
+    <string name="pref_default_activity">mainPage</string>
+  	<string name="pref_default_graph_interval">10</string>
 </resources>

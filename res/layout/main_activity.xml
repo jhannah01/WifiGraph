@@ -1,87 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <ExpandableListView
         android:id="@+id/listview_discovered"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:groupIndicator="@drawable/selector_arrow_green"
-        android:indicatorLeft="0dp"
-        android:indicatorRight="20dp"
+        android:layout_height="match_parent"
         android:childIndicator="@drawable/selector_arrow_blue"
-        android:childIndicatorLeft="5dp"
-        android:childIndicatorRight="25dp"/>
+        android:groupIndicator="@drawable/selector_arrow_green" >
 
-    <LinearLayout
-        android:id="@+id/button_layout_left"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/listview_discovered"
-        android:layout_alignEnd="@id/listview_discovered"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true" >
+    </ExpandableListView>
 
-        <Button
-            android:id="@+id/button_open"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onOpenClick"
-            android:text="@string/btn_open" />
-
-        <Button
-            android:id="@+id/button_close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onCloseClick"
-            android:text="@string/btn_close" />
-
-        <Button
-            android:id="@+id/button_exit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onExitClick"
-            android:text="@string/btn_exit" />
-
-        <Button
-            android:id="@+id/button_graphs"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onGraphsClick"
-            android:text="@string/btn_graphs" />
-
-        <Button
-            android:id="@+id/button_graph_demo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onGraphDemoClick"
-            android:text="@string/btn_graph_demo" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/button_layout_right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/listview_discovered"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:orientation="horizontal" >
-
-        <ToggleButton
-            android:id="@+id/button_toggle_scanning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="onToggleScanning"
-            android:text="@string/btn_toggle_scanning" />
-
-        <TextView
-            android:id="@+id/textview_scanning_status"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/text_scanning_status_stopped" />
-    </LinearLayout>
-
-</RelativeLayout>
+</LinearLayout>

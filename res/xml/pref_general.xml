@@ -1,0 +1,25 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+	<ListPreference
+        android:key="default_activity"
+        android:title="Default Page"
+        android:summary="Specify which page should be opened by default"
+        android:defaultValue="@string/pref_default_activity"
+        android:entries="@array/defaultActivities"
+        android:entryValues="@array/defaultActivityValues"/>
+	<PreferenceCategory
+	    android:key="scanning_preferences"
+	    android:title="Scanning Preferences">
+	    <CheckBoxPreference 
+	        android:key="autostart_scanning"
+	        android:summary="Automatically start scanning when the application starts"
+	        android:title="Automatically Start Scanning"
+	        android:defaultValue="true"/>
+	    <ListPreference 
+	        android:key="scan_interval"
+	        android:title="Scanning Interval"
+	        android:summary="Set the interval between scan attempts"
+	        android:defaultValue="@string/pref_default_scan_interval"
+	        android:entries="@array/scanningInterval"
+            android:entryValues="@array/scanningIntervalValues"/>
+	</PreferenceCategory>
+</PreferenceScreen>

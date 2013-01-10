@@ -6,4 +6,5 @@
 	<dimen name="text_small_size">10sp</dimen>
 	<dimen name="text_normal_size">20sp</dimen>
 	<dimen name="text_label_size">8sp</dimen>
+	<dimen name="label_margin_default">2dp</dimen>
 </resources>

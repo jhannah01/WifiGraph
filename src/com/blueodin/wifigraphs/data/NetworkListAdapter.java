@@ -1,26 +1,16 @@
 package com.blueodin.wifigraphs.data;
 
-import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 
 import com.blueodin.wifigraphs.R;
-import com.blueodin.wifigraphs.R.drawable;
 import com.blueodin.wifigraphs.data.NetworkSecurity.SecurityType;
 
-import android.database.DataSetObserver;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.view.ViewGroup;
 import android.net.wifi.ScanResult;
-import android.os.Build;
-import android.widget.ExpandableListAdapter;
-import android.graphics.Rect;
 import android.graphics.drawable.Drawable;
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.BaseExpandableListAdapter;
@@ -30,8 +20,6 @@ import android.widget.TextView;
 public class NetworkListAdapter extends BaseExpandableListAdapter {	
 	private Context mContext;
 	private ArrayList<NetworkScanGroup> mGroups;
-	private HashMap<NetworkScanGroup,NetworkResultEntry> mNetworkList = new HashMap<NetworkListAdapter.NetworkScanGroup, NetworkListAdapter.NetworkResultEntry>();
-
 	public static class NetworkResultEntry implements Comparable<NetworkScanGroup> {
 		private String mBSSID;
 		private String mSSID;
@@ -279,15 +267,16 @@ public class NetworkListAdapter extends BaseExpandableListAdapter {
 			view = infalInflater.inflate(R.layout.expandlist_child_item, null);
 		}
 		
-		TextView textViewTimestamp = (TextView) view.findViewById(R.id.textview_child_timestamp);
-		TextView textViewContent = (TextView) view.findViewById(R.id.textview_child_details);
-		TextView textViewLevel = (TextView) view.findViewById(R.id.textview_child_level);
-		TextView textViewCount = (TextView) view.findViewById(R.id.textview_child_count);
+		//TextView textViewTimestamp = (TextView) view.findViewById(R.id.textview_child_timestamp);
+		//textViewTimestamp.setText(child.getFormattedTimestamp());
+		//TextView textViewCount = (TextView) view.findViewById(R.id.textview_child_count);
+		//textViewCount.setText(String.format("#%d",childPosition));
 		
-		textViewTimestamp.setText(child.getFormattedTimestamp());
-		textViewContent.setText(child.toString());
+		TextView textViewDetails = (TextView) view.findViewById(R.id.textview_child_details);
+		textViewDetails.setText(child.toString());
+		
+		TextView textViewLevel = (TextView) view.findViewById(R.id.textview_child_level);
 		textViewLevel.setText(String.format("%d dBm", child.getLevel()));
-		textViewCount.setText(String.format("#%d",childPosition));
 		
 		return view;
 	}

@@ -1,12 +1,9 @@
 package com.blueodin.wifigraphs.data;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-
-import com.blueodin.wifigraphs.data.ScanResultManager.ScanResultEntry;
 
 import android.net.wifi.ScanResult;
 import android.text.format.DateFormat;

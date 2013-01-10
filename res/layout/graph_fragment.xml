@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="top|center_horizontal"
         android:paddingBottom="5dp"
-        android:text="@string/text_graph_header"
+        android:text="@string/label_graph_header"
         android:textSize="25sp" />
 
     <LinearLayout

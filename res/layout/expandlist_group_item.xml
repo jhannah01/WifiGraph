@@ -6,12 +6,13 @@
 
     <ImageView
         android:id="@+id/imageview_group_icon"
-        android:layout_width="@dimen/listview_icon_size"
-        android:layout_height="@dimen/listview_icon_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/listview_indicator_size"
-        android:contentDescription="@string/group_icon_descriptor"
+        android:scaleType="fitCenter"
         android:src="@drawable/ic_blue_wifi" />
+
     <TextView
         android:id="@+id/textview_group_ssid"
         android:layout_width="wrap_content"
@@ -38,7 +39,7 @@
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/textview_group_bssid"
         android:labelFor="@+id/textview_group_records"
-        android:text="@string/constant_label_records"
+        android:text="@string/label_records"
         style="@style/SmallText.Alt"/>
 
     <TextView
@@ -57,7 +58,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@+id/textview_group_lastseen"
-        android:text="@string/constant_label_lastseen"
+        android:text="@string/label_lastseen"
         style="@style/SmallText.Alt"/>
 
     <TextView
