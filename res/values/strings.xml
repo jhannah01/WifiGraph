@@ -21,7 +21,9 @@
     <string name="filler_child_networkdetails">cwifi [00:11:22:33:44:55]</string>
     <string name="filler_timestamp">Jan 07, 2013 6:40PM</string>
     <string name="filler_records">6</string>
-    <string name="filler_signal_level">-45 dBm</string>
+    <string name="filler_child_level">-45 dBm</string>
+    <string name="filler_child_frequency">2105 MHz</string>
+    <string name="filler_child_capabilities">WPA, WPA2 (WPS: No, Type: Access Point)</string>
     <string name="filler_child_count">#15</string>
     <string name="filler_content_label">Label:</string>
     <string name="filler_content_text">Content Goes Here</string>
@@ -32,6 +34,8 @@
     <string name="label_records">Records:</string>
     <string name="label_lastseen">Last Seen:</string>
     <string name="label_level">Signal Strength:</string>
+    <string name="label_frequency">Frequency:</string>
+    <string name="label_capabilities">Security:</string>
     <string name="label_timestamp">Timestamp:</string>
     <string name="label_results">Results:</string>
     <string name="label_scanning_stopped">Stopped.</string>
@@ -43,8 +47,14 @@
     
     <string name="title_activity_graph">Wireless Graphs</string>
     <string name="title_activity_settings">WifiGraph Settings</string>
-    
+    <string name="title_child_signal_graph">Historical Graph</string>
     <string name="pref_default_scan_interval">5000</string>
     <string name="pref_default_activity">mainPage</string>
   	<string name="pref_default_graph_interval">10</string>
+  	
+  	<string name="notif_service_title">WifiGraph Scanner</string>
+	<string name="notif_service_content">Wifi Scanner is running</string>
+	
+	<string name="dialog_service_stop">Stop the Wifi sniffer service?</string>
+	<string name="dialog_button_yes_and_exit">Yes, and exit</string>
 </resources>

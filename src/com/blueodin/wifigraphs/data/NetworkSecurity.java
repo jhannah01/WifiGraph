@@ -120,7 +120,7 @@ public class NetworkSecurity {
 		return hasESS(mCapabilities);
 	}
 	
-	public String getHumanReadable() {
+	public String getFriendly() {
 		String hasWPS = (hasWPS() ? "Yes" : "No");
 		String netType = "Other";
 		

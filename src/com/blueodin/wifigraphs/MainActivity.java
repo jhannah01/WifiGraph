@@ -1,46 +1,41 @@
 package com.blueodin.wifigraphs;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import com.blueodin.wifigraphs.data.NetworkListAdapter;
-import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkResultEntry;
-import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkScanGroup;
+import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkListGroup;
+import com.blueodin.wifigraphs.data.NetworkScanRecordsDataSource;
+import com.jjoe64.graphview.LineGraphView;
 
-import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.FeatureInfo;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.Window;
-import android.widget.AbsListView;
-import android.widget.Button;
-import android.widget.Toast;
-import android.widget.ToggleButton;
 import android.widget.ExpandableListView;
-
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import wei.mark.standout.StandOutWindow;
 
 public class MainActivity extends Activity {
 	private boolean mIsWifiScanning = false;
 	private NetworkListAdapter mListAdapter;
-	private ArrayList<NetworkScanGroup> mScanGroups;
 	private ExpandableListView mDiscoveredListView = null;
 	private MenuItem mToggleScanningMenuItem;
 	private boolean mAutoStartScanning;
 	private int mScanInverval;
 	private String mDefaultActivity;
+	private NetworkScanRecordsDataSource mRecordsDataSource = new NetworkScanRecordsDataSource(this);
+	public final static String FLAG_FROM_NOTIFICATION = "from_notification";
 	
 	public boolean isWifiScanning() {
 		return this.mIsWifiScanning;
@@ -49,21 +44,8 @@ public class MainActivity extends Activity {
 	private WifiStateReciever mWifiScanReceiver = new WifiStateReciever() {
 		@Override
 		public void updateResults(List<ScanResult> results) {
-	    	if(mListAdapter == null) {
-	    		Log.w(TAG, "Bailing on updating the scan results (null list adapter).");
-	    		return;
-	    	}
-	    	
-	    	for(ScanResult result : results) {
-	    		NetworkResultEntry entry = new NetworkResultEntry(result);
-	    		NetworkScanGroup group = mListAdapter.getGroupByBSSID(result.BSSID);
-				if(group == null)
-	    			group = new NetworkScanGroup(result.BSSID, result.SSID);
-				
-	    		mListAdapter.addItem(entry, group);
-	    	}
-	    	
-	    	mListAdapter.notifyDataSetChanged();
+			for(ScanResult result : results)
+				mListAdapter.addRecord(mRecordsDataSource.createRecord(result));
 		}
 	};
 	
@@ -77,7 +59,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.menu_main_toggle_scanning)
-			.setIcon((mIsWifiScanning ? R.drawable.ic_action_wifi_green : R.drawable.ic_action_wifi))
+			//.setIcon(R.drawable.ic_wifi_toggle);
 			.setChecked(mIsWifiScanning);
 		
 		return super.onPrepareOptionsMenu(menu);
@@ -94,10 +76,10 @@ public class MainActivity extends Activity {
 			toggleScanning();
 			
 			if(mIsWifiScanning) {
-				item.setIcon(R.drawable.ic_orange_wifi);
+				//item.setIcon(R.drawable.ic_wifi_green);
 				item.setChecked(true);
 			} else {
-				item.setIcon(R.drawable.ic_action_wifi);
+				//item.setIcon(R.drawable.ic_action_wifi);
 				item.setChecked(false);
 			}
 			
@@ -130,8 +112,46 @@ public class MainActivity extends Activity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null) {
+        	if(bundle.containsKey(FLAG_FROM_NOTIFICATION) && bundle.getBoolean(FLAG_FROM_NOTIFICATION)) {
+        		mIsWifiScanning = true;
+        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        		builder
+    				.setMessage(R.string.dialog_service_stop)
+	        		.setPositiveButton(R.string.dialog_button_yes_and_exit, new DialogInterface.OnClickListener() {
+	        			public void onClick(DialogInterface dialog, int id) {
+	        				if(!mIsWifiScanning)
+	        					stopScanning();
+	        				else
+	        					toggleScanning();
+	        				
+	        				finish();
+	        			}
+	        		})
+	        		.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) { }
+					})
+					.setNeutralButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							if(!mIsWifiScanning)
+	        					stopScanning();
+	        				else
+	        					toggleScanning();
+						}
+					})
+	        		.create()
+	        		.show();
+        	}
+        }
+        
         PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
         readSettings();
+        
+        mRecordsDataSource.open();
         
         if(mDefaultActivity == "graphsPage") {
         	openGraphsActivity();
@@ -143,11 +163,19 @@ public class MainActivity extends Activity {
         
         mDiscoveredListView = (ExpandableListView)findViewById(R.id.listview_discovered);
                 
-        mScanGroups = new ArrayList<NetworkScanGroup>();
-        mListAdapter = new NetworkListAdapter(MainActivity.this, mScanGroups);
+        mListAdapter = new NetworkListAdapter(MainActivity.this, mRecordsDataSource.getAllRecords());
         mDiscoveredListView.setAdapter(mListAdapter);
         
-		if(mAutoStartScanning)
+        mDiscoveredListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+			@Override
+			public boolean onGroupClick(ExpandableListView parent, View v,
+					int groupPosition, long id) {
+				return false;
+				
+			}
+		});
+        
+		if(mAutoStartScanning && !mIsWifiScanning)
 			toggleScanning();
     }
 	
@@ -175,6 +203,10 @@ public class MainActivity extends Activity {
     
     public void exitActivity() {
     	closeGraphWindows();
+    	
+    	if(mIsWifiScanning)
+    		toggleScanning();
+    	
     	finish();
     }
     
@@ -191,27 +223,28 @@ public class MainActivity extends Activity {
     }
     
     public void toggleScanning() {
-    	if(!mIsWifiScanning) {
-    		registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
-    		Intent serviceIntent = new Intent(this, WifiLockService.class);
-    		serviceIntent.putExtra(WifiLockService.SET_SCAN_INTERVAL, mScanInverval);
-    		startService(serviceIntent);
-    		
-    		if(mToggleScanningMenuItem != null) {
-    			mToggleScanningMenuItem.setChecked(true);
-    			mToggleScanningMenuItem.setIcon(R.drawable.ic_action_wifi_green);
-    		}
-    	} else {
-    		unregisterReceiver(mWifiScanReceiver);
-    		stopService(new Intent(this, WifiLockService.class));
-    		
-    		if(mToggleScanningMenuItem != null) {
-    			mToggleScanningMenuItem.setChecked(false);
-    			mToggleScanningMenuItem.setIcon(R.drawable.ic_action_wifi);
-    		}
-    	}
+    	if(!mIsWifiScanning)
+    		startScanning();
+    	else
+    		stopScanning();
     	
     	mIsWifiScanning = !mIsWifiScanning;
+    	
+    	if(mToggleScanningMenuItem != null) {
+			mToggleScanningMenuItem.setChecked(mIsWifiScanning);
+			//mToggleScanningMenuItem.setIcon((mIsWifiScanning ? R.drawable.ic_wifi_green : R.drawable.ic_action_wifi));
+		}
+    }
+    public void startScanning() {
+    	registerReceiver(mWifiScanReceiver, new IntentFilter(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION));
+		Intent serviceIntent = new Intent(this, WifiLockService.class);
+		serviceIntent.putExtra(WifiLockService.SET_SCAN_INTERVAL, mScanInverval);
+		startService(serviceIntent);
+    }
+    
+    public void stopScanning() {
+    	unregisterReceiver(mWifiScanReceiver);
+		stopService(new Intent(this, WifiLockService.class));
     }
     
     @Override
@@ -226,5 +259,11 @@ public class MainActivity extends Activity {
     	super.onPause();
     	if(mIsWifiScanning)
     		unregisterReceiver(mWifiScanReceiver);
+    }
+    
+    @Override
+    public void onDestroy() {
+    	super.onDestroy();
+    	mRecordsDataSource.close();
     }
 }

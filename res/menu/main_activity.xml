@@ -1,4 +1,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+        <item android:id="@+id/menu_main_toggle_scanning"
+	    android:title="@string/menu_title_toggle_scanning"
+	    android:showAsAction="always"
+	    android:checkable="true"
+	    android:icon="@drawable/ic_wifi_toggle"/>
+        
     <item android:id="@+id/menu_main_open_graph_activity"
 	    android:title="@string/menu_title_open_graph_activity"
 	    android:showAsAction="ifRoom|withText"
@@ -18,12 +24,6 @@
         android:title="@string/menu_title_settings"
         android:showAsAction="ifRoom"
         android:icon="@android:drawable/ic_menu_preferences"/>
-	
-    <item android:id="@+id/menu_main_toggle_scanning"
-	    android:title="@string/menu_title_toggle_scanning"
-	    android:showAsAction="ifRoom"
-	    android:checkable="true"
-	    android:icon="@drawable/ic_action_wifi"/>
     
     <item android:id="@+id/menu_main_temp_graphs_demo" 
         android:title="Open Graphs Demo" 

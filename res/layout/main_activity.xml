@@ -9,9 +9,6 @@
         android:id="@+id/listview_discovered"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:childIndicator="@drawable/selector_arrow_blue"
-        android:groupIndicator="@drawable/selector_arrow_green" >
-
-    </ExpandableListView>
-
+        android:childIndicator="@null"
+        android:groupIndicator="@drawable/ic_arrow_blue" />
 </LinearLayout>

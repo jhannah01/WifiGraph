@@ -2,9 +2,8 @@ package com.blueodin.graphs.tics;
 
 import java.util.Calendar;
 
-//import org.tamanegi.atmosphere.LogData;
 import com.blueodin.wifigraphs.R;
-import com.blueodin.wifigraphs.data.SignalRecord;
+import com.blueodin.wifigraphs.data.NetworkScanRecord;
 import com.blueodin.graphs.tics.TicsUtils;
 
 import android.content.Context;
@@ -22,7 +21,7 @@ public class PlotView extends View
         public void onSelectionChanged(long start, long end);
     }
 
-    private SignalRecord[] records = null;
+    private NetworkScanRecord[] records = null;
     private int record_cnt = 0;
 
     private Paint paint;
@@ -173,18 +172,18 @@ public class PlotView extends View
         float[] pts = new float[record_cnt * 4];
         int pt_cnt = 0;
         for(int i = 0; i < record_cnt; i++) {
-        	long rec_time = records[i].getTime();
+        	long rec_time = records[i].getTimestamp();
             if(rec_time < range_start || rec_time  > range_end)
                 continue;
 
             int x = (int)(((rec_time - range_start) / range) * w);
             int y = h -
-                (int)(((records[i].getValue() - value_min) / value_range) * h);
+                (int)(((records[i].getLevel() - value_min) / value_range) * h);
 
             if(! is_first) {
                 int alpha = (int)
                     (((float)normal_interval /
-                      (rec_time - records[i - 1].getTime())) * 0xff);
+                      (rec_time - records[i - 1].getTimestamp())) * 0xff);
                 if(alpha < 0x80) {
                     paint.setAlpha(alpha);
                     canvas.drawLine(prev_x, prev_y, x, y, paint);
@@ -214,7 +213,7 @@ public class PlotView extends View
         }
     }
 
-    public void setData(SignalRecord[] records, int cnt)
+    public void setData(NetworkScanRecord[] records, int cnt)
     {
         this.records = records;
         this.record_cnt = cnt;
