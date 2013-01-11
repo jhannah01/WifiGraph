@@ -39,11 +39,11 @@ public class NetworkDataSource {
 		  dbHelper.close();
 	  }
 	  
-	  public NetworkScanRecord createRecord(ScanResult result) {
+	  public NetworkScanResult createRecord(ScanResult result) {
 		  return createRecord(result.BSSID, result.SSID, result.level, result.frequency, result.capabilities, System.currentTimeMillis()); 
 	  }
 	  
-	  public NetworkScanRecord createRecord(String bssid, String ssid, int level, int freqency, String capabilities, long timestamp) {
+	  public NetworkScanResult createRecord(String bssid, String ssid, int level, int freqency, String capabilities, long timestamp) {
 	      ContentValues values = new ContentValues();
 	      values.put(DBHelper.COLUMN_BSSID, bssid);
 	      values.put(DBHelper.COLUMN_SSID, ssid);
@@ -56,27 +56,27 @@ public class NetworkDataSource {
 	    
 	      Cursor cursor = database.query(DBHelper.TABLE_READINGS, allColumns, DBHelper.COLUMN_ID + " = " + insertId, null, null, null, null);
 	      cursor.moveToFirst();
-	      NetworkScanRecord newRecord = cursorToRecord(cursor);
+	      NetworkScanResult newRecord = cursorToRecord(cursor);
 	      cursor.close();
 	      
 	      return newRecord;
 	  }
 
-	  public void deleteRecord(NetworkScanRecord record) {
+	  public void deleteRecord(NetworkScanResult record) {
 	      long id = record.getId();
 	      Log.i(TAG, "Record deleted with id: " + id);
 	      database.delete(DBHelper.TABLE_READINGS, DBHelper.COLUMN_ID + " = " + id, null);
 	  }
 	  
-	  public List<NetworkScanRecord> getAllRecords() {
-	      List<NetworkScanRecord> records = new ArrayList<NetworkScanRecord>();
+	  public List<NetworkScanResult> getAllRecords() {
+	      List<NetworkScanResult> records = new ArrayList<NetworkScanResult>();
 
   	      Cursor cursor = database.query(DBHelper.TABLE_READINGS, allColumns, null, null, null, null, null);
 
 	      cursor.moveToFirst();
 	      
 	      while (!cursor.isAfterLast()) {
-	    	  NetworkScanRecord record = cursorToRecord(cursor);
+	    	  NetworkScanResult record = cursorToRecord(cursor);
 	      
 	    	  records.add(record);
 	    	  
@@ -88,8 +88,8 @@ public class NetworkDataSource {
 	      return records;
 	  }
 
-	  private NetworkScanRecord cursorToRecord(Cursor cursor) {
-		  return (new NetworkScanRecord(
+	  private NetworkScanResult cursorToRecord(Cursor cursor) {
+		  return (new NetworkScanResult(
 				cursor.getInt(0),	 // id
 				cursor.getString(1), // bssid
 				cursor.getString(2), // ssid

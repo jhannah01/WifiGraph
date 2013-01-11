@@ -7,6 +7,8 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -22,10 +24,20 @@ public class WifiLockService extends Service {
 	private WifiScanner wifiScanner;
     private int scanInterval = DEFAULT_SCAN_INTERVAL;
  
-    @Override
-    public IBinder onBind(Intent arg0) {
-        return null;
+    public class WifiLockServiceBinder extends Binder {
+        WifiLockService getService() {
+            return WifiLockService.this;
+        }
     }
+    
+    @Override
+    public IBinder onBind(Intent intent) {
+        return mBinder;
+    }
+
+    // This is the object that receives interactions from clients.  See
+    // RemoteService for a more complete example.
+    private final IBinder mBinder = new WifiLockServiceBinder();
     
     @Override
     public void onCreate() {
@@ -43,7 +55,7 @@ public class WifiLockService extends Service {
     			this.scanInterval = bundle.getInt(SET_SCAN_INTERVAL);
     	}
     	
-    	return super.onStartCommand(intent, flags, startId);
+    	return START_STICKY;
     }
  
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)

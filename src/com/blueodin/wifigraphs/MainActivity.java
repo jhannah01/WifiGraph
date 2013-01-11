@@ -4,26 +4,27 @@ package com.blueodin.wifigraphs;
 import java.util.List;
 
 import com.blueodin.wifigraphs.data.NetworkListAdapter;
-import com.blueodin.wifigraphs.data.NetworkListAdapter.NetworkListGroup;
 import com.blueodin.wifigraphs.data.NetworkScanRecordsDataSource;
-import com.jjoe64.graphview.LineGraphView;
-
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.IBinder;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import wei.mark.standout.StandOutWindow;
 
 public class MainActivity extends Activity {
@@ -40,14 +41,23 @@ public class MainActivity extends Activity {
 	public boolean isWifiScanning() {
 		return this.mIsWifiScanning;
 	}
-	
 	private WifiStateReciever mWifiScanReceiver = new WifiStateReciever() {
 		@Override
-		public void updateResults(List<ScanResult> results) {
-			for(ScanResult result : results)
-				mListAdapter.addRecord(mRecordsDataSource.createRecord(result));
+		public void updateResults(final List<ScanResult> results) {
+			//synchronized (mListAdapter) {
+				//(new Thread(new Runnable() {
+				//	@Override
+				//	public void run() {
+						for(ScanResult result : results)
+				    		mListAdapter.addResult(mRecordsDataSource.createRecord(result));
+					}
+				//})).start();
+			//}
+			
 		}
 	};
+	
+	
 	
 	@Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -59,7 +69,7 @@ public class MainActivity extends Activity {
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		menu.findItem(R.id.menu_main_toggle_scanning)
-			//.setIcon(R.drawable.ic_wifi_toggle);
+			.setIcon(mIsWifiScanning ? R.drawable.ic_wifi_green : R.drawable.ic_wifi_grey)
 			.setChecked(mIsWifiScanning);
 		
 		return super.onPrepareOptionsMenu(menu);
@@ -76,10 +86,10 @@ public class MainActivity extends Activity {
 			toggleScanning();
 			
 			if(mIsWifiScanning) {
-				//item.setIcon(R.drawable.ic_wifi_green);
+				item.setIcon(R.drawable.ic_wifi_green);
 				item.setChecked(true);
 			} else {
-				//item.setIcon(R.drawable.ic_action_wifi);
+				item.setIcon(R.drawable.ic_wifi_grey);
 				item.setChecked(false);
 			}
 			
@@ -109,6 +119,37 @@ public class MainActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private void openServiceAlertDialog() {
+		AlertDialog.Builder builder = new AlertDialog.Builder(this);
+		builder
+			.setMessage(R.string.dialog_service_stop)
+    		.setPositiveButton(R.string.dialog_button_yes_and_exit, new DialogInterface.OnClickListener() {
+    			public void onClick(DialogInterface dialog, int id) {
+    				if(!mIsWifiScanning)
+    					stopScanning();
+    				else
+    					toggleScanning();
+    				
+    				finish();
+    			}
+    		})
+    		.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) { }
+			})
+			.setNeutralButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					if(!mIsWifiScanning)
+    					stopScanning();
+    				else
+    					toggleScanning();
+				}
+			})
+    		.create()
+    		.show();
+	}
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -117,34 +158,7 @@ public class MainActivity extends Activity {
         if(bundle != null) {
         	if(bundle.containsKey(FLAG_FROM_NOTIFICATION) && bundle.getBoolean(FLAG_FROM_NOTIFICATION)) {
         		mIsWifiScanning = true;
-        		AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        		builder
-    				.setMessage(R.string.dialog_service_stop)
-	        		.setPositiveButton(R.string.dialog_button_yes_and_exit, new DialogInterface.OnClickListener() {
-	        			public void onClick(DialogInterface dialog, int id) {
-	        				if(!mIsWifiScanning)
-	        					stopScanning();
-	        				else
-	        					toggleScanning();
-	        				
-	        				finish();
-	        			}
-	        		})
-	        		.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) { }
-					})
-					.setNeutralButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							if(!mIsWifiScanning)
-	        					stopScanning();
-	        				else
-	        					toggleScanning();
-						}
-					})
-	        		.create()
-	        		.show();
+        		openServiceAlertDialog();
         	}
         }
         
@@ -165,20 +179,11 @@ public class MainActivity extends Activity {
                 
         mListAdapter = new NetworkListAdapter(MainActivity.this, mRecordsDataSource.getAllRecords());
         mDiscoveredListView.setAdapter(mListAdapter);
-        
-        mDiscoveredListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-			@Override
-			public boolean onGroupClick(ExpandableListView parent, View v,
-					int groupPosition, long id) {
-				return false;
-				
-			}
-		});
-        
+
 		if(mAutoStartScanning && !mIsWifiScanning)
 			toggleScanning();
     }
-	
+
 	private void readSettings() {
 		SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
 		mAutoStartScanning = sharedPref.getBoolean(SettingsActivity.KEY_AUTOSTART_SCANNING, false);
@@ -232,7 +237,7 @@ public class MainActivity extends Activity {
     	
     	if(mToggleScanningMenuItem != null) {
 			mToggleScanningMenuItem.setChecked(mIsWifiScanning);
-			//mToggleScanningMenuItem.setIcon((mIsWifiScanning ? R.drawable.ic_wifi_green : R.drawable.ic_action_wifi));
+			mToggleScanningMenuItem.setIcon((mIsWifiScanning ? R.drawable.ic_wifi_green : R.drawable.ic_wifi_grey));
 		}
     }
     public void startScanning() {

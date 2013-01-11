@@ -8,18 +8,18 @@ import java.util.List;
 import com.blueodin.wifigraphs.R;
 import com.blueodin.wifigraphs.data.NetworkSecurity;
 
-public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collection<NetworkScanRecord> {
+public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collection<NetworkScanResult> {
 	private String mBSSID;
 	private String mSSID;
-	private List<NetworkScanRecord> mItems;
+	private List<NetworkScanResult> mItems;
 	
 	public NetworkScanGroup(String bssid, String ssid) {
 		this.mBSSID = bssid;
 		this.mSSID = ssid;
-		this.mItems = new ArrayList<NetworkScanRecord>();
+		this.mItems = new ArrayList<NetworkScanResult>();
 	}
 	
-	public NetworkScanGroup(String bssid, String ssid, List<NetworkScanRecord> items) {
+	public NetworkScanGroup(String bssid, String ssid, List<NetworkScanResult> items) {
 		this(bssid, ssid);
 		this.mItems = items;
 	}
@@ -40,19 +40,19 @@ public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collectio
 		this.mSSID = ssid;
 	}
 	
-	public List<NetworkScanRecord> getRecords() {
+	public List<NetworkScanResult> getRecords() {
 		return this.mItems;
 	}
 	
-	public void setRecords(List<NetworkScanRecord> items) {
+	public void setRecords(List<NetworkScanResult> items) {
 		this.mItems = items;
 	}
 	
-	public NetworkScanRecord getLastEntry() {
+	public NetworkScanResult getLastEntry() {
 		long ts = 0;
-		NetworkScanRecord lastEntry = null;
+		NetworkScanResult lastEntry = null;
 		
-		for(NetworkScanRecord entry : mItems) {
+		for(NetworkScanResult entry : mItems) {
 			if(entry.getTimestamp() > ts)
 				lastEntry = entry;
 			ts = entry.getTimestamp();
@@ -62,7 +62,7 @@ public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collectio
 	}
 
 	public String getLastTimestamp() {
-		NetworkScanRecord lastEntry = getLastEntry();
+		NetworkScanResult lastEntry = getLastEntry();
 		if(lastEntry == null)
 			return "Unknown";
 		
@@ -120,12 +120,12 @@ public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collectio
 	}
 
 	@Override
-	public boolean add(NetworkScanRecord object) {
+	public boolean add(NetworkScanResult object) {
 		return this.mItems.add(object);
 	}
 
 	@Override
-	public boolean addAll(Collection<? extends NetworkScanRecord> collection) {
+	public boolean addAll(Collection<? extends NetworkScanResult> collection) {
 		return this.mItems.addAll(collection);
 	}
 
@@ -150,7 +150,7 @@ public class NetworkScanGroup implements Comparable<NetworkScanGroup>, Collectio
 	}
 
 	@Override
-	public Iterator<NetworkScanRecord> iterator() {
+	public Iterator<NetworkScanResult> iterator() {
 		return this.mItems.iterator();
 	}
 

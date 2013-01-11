@@ -5,7 +5,7 @@ import android.net.wifi.ScanResult;
 import android.text.format.DateFormat;
 import com.blueodin.wifigraphs.data.NetworkSecurity.SecurityType;
 
-public class NetworkScanRecord implements Comparable<NetworkScanRecord> {
+public class NetworkScanResult implements Comparable<NetworkScanResult> {
 	private int mId = -1;
 	private String mBSSID;
 	private String mSSID;
@@ -14,12 +14,12 @@ public class NetworkScanRecord implements Comparable<NetworkScanRecord> {
 	private String mCapabilities;
 	private long mTimestamp;
 	
-	public NetworkScanRecord(int id, String bssid, String ssid, int level, int frequency, String capabilities, long timestamp) {
+	public NetworkScanResult(int id, String bssid, String ssid, int level, int frequency, String capabilities, long timestamp) {
 		this(bssid, ssid, level, frequency, capabilities, timestamp);
 		this.mId = id;
 	}
 	
-	public NetworkScanRecord(String bssid, String ssid, int level, int frequency, String capabilities, long timestamp) {
+	public NetworkScanResult(String bssid, String ssid, int level, int frequency, String capabilities, long timestamp) {
 		this.mBSSID = bssid;
 		this.mSSID = ssid;
 		this.mLevel = level;
@@ -28,7 +28,7 @@ public class NetworkScanRecord implements Comparable<NetworkScanRecord> {
 		this.mTimestamp = timestamp;
 	}
 
-	public NetworkScanRecord(ScanResult result) {
+	public NetworkScanResult(ScanResult result) {
 		this(result.BSSID, result.SSID, result.level, result.frequency, result.capabilities, System.currentTimeMillis());
 	}
 	
@@ -102,7 +102,7 @@ public class NetworkScanRecord implements Comparable<NetworkScanRecord> {
 	}
 
 	@Override
-	public int compareTo(NetworkScanRecord o) {
+	public int compareTo(NetworkScanResult o) {
 		if(!this.mSSID.equals(o.getSSID()))
 			return this.mSSID.compareTo(o.getSSID());
 		
@@ -111,10 +111,10 @@ public class NetworkScanRecord implements Comparable<NetworkScanRecord> {
 	
 	@Override
 	public boolean equals(Object o) {
-		if(!(o instanceof NetworkScanRecord))
+		if(!(o instanceof NetworkScanResult))
 			return false;
 		
-		NetworkScanRecord group = (NetworkScanRecord)o;
+		NetworkScanResult group = (NetworkScanResult)o;
 		if(group.getBSSID().equals(this.mBSSID) && group.getSSID().equals(this.mSSID))
 			return true;
 		

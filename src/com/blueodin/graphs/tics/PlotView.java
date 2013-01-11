@@ -3,7 +3,7 @@ package com.blueodin.graphs.tics;
 import java.util.Calendar;
 
 import com.blueodin.wifigraphs.R;
-import com.blueodin.wifigraphs.data.NetworkScanRecord;
+import com.blueodin.wifigraphs.data.NetworkScanResult;
 import com.blueodin.graphs.tics.TicsUtils;
 
 import android.content.Context;
@@ -21,7 +21,7 @@ public class PlotView extends View
         public void onSelectionChanged(long start, long end);
     }
 
-    private NetworkScanRecord[] records = null;
+    private NetworkScanResult[] records = null;
     private int record_cnt = 0;
 
     private Paint paint;
@@ -213,7 +213,7 @@ public class PlotView extends View
         }
     }
 
-    public void setData(NetworkScanRecord[] records, int cnt)
+    public void setData(NetworkScanResult[] records, int cnt)
     {
         this.records = records;
         this.record_cnt = cnt;

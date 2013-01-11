@@ -17,7 +17,7 @@ public class DBHelper extends SQLiteOpenHelper {
   public static final String COLUMN_TIMESTAMP = "timestamp";
   
   private static final String DATABASE_NAME = "wifireadings.db";
-  private static final int DATABASE_VERSION = 8;
+  private static final int DATABASE_VERSION = 9;
 
   private static final String TAG = "DBHelper";
   
