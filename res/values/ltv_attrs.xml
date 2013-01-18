@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<declare-styleable name="LabeledTextView">
+  		<attr name="labelText" format="string" />
+  		<attr name="android:text" />
+  		<attr name="android:textAppearance" />
+  		<attr name="labelStyle" format="reference" value="@style/MediumText.Alt" />
+  		<attr name="labelPadding" format="dimension|reference" value="@dimen/label_margin_default" />
+ 	</declare-styleable>    
+</resources>

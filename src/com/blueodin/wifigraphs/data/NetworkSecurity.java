@@ -120,36 +120,43 @@ public class NetworkSecurity {
 		return hasESS(mCapabilities);
 	}
 	
-	public String getFriendly() {
-		String hasWPS = (hasWPS() ? "Yes" : "No");
+	public static String getFriendlyString(String capabilities) {
+		NetworkSecurity sec = new NetworkSecurity(capabilities);
+		
+		String hasWPS = (sec.hasWPS() ? "Yes" : "No");
 		String netType = "Other";
 		
-		if(isAdhoc())
+		if(sec.isAdhoc())
 			netType = "Ad-Hoc";
-		else if(isEnterprise())
+		else if(sec.isEnterprise())
 			netType = "Enterprise";
-		else if(hasESS())
+		else if(sec.hasESS())
 			netType = "Access Point";
 		
-		return String.format("%s (WPS: %s, Type: %s)", this.toString(), hasWPS, netType);
+		return String.format("%s (WPS: %s, Type: %s)", formatListOfSecurities(sec.getSecurityTypes()), hasWPS, netType);
+	}
+	
+	public static String stringFromCapabilities(String capabilities) {
+		return (new NetworkSecurity(capabilities)).toString();
+	}
+	
+	public static String formatListOfSecurities(List<SecurityType> securities) {
+		if(securities.size() < 1)
+			return "None";
+		
+		if(securities.size() == 1)
+			return securities.get(0).toString();
+		
+		String result = securities.remove(0).toString();
+		
+		for(SecurityType sec : securities)
+			result += ", " + sec.toString();
+			
+		return result;
 	}
 	
 	@Override
 	public String toString() {
-		String result;
-		List<SecurityType> types = getSecurityTypes();
-		
-		if(types.size() < 1)
-			return "Unknown";
-		
-		if(types.size() == 1)
-			return types.get(0).toString();
-		
-		result = types.remove(0).toString();
-		
-		for(SecurityType type : types)
-			result += ", " + type.toString();
-			
-		return result;
+		return getFriendlyString(this.mCapabilities);
 	}
 }

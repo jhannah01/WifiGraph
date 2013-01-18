@@ -24,7 +24,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/imageview_group_icon"
-        android:text="@string/filler_group_ssid"
+        android:text="@string/filler_ssid"
         android:textColor="@color/primary_text_color" />
 
     <TextView
@@ -35,7 +35,7 @@
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@+id/textview_group_ssid"
-        android:text="@string/filler_group_bssid"
+        android:text="@string/filler_bssid"
         android:textStyle="italic" />
 
     <TableLayout

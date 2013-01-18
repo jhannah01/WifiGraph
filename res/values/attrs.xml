@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+	<string-array name="nav_items">
+	    <item name="main_page">Main Page</item>
+	    <item name="overview_page">Overview</item>
+	    <item name="graphs_page">Graphs &amp; Stats</item>
+	    <item name="settings_page">Settings</item>
+	    <item name="debug_page">Debug Page</item>
+	    <item name="exit">Exit</item>
+	</string-array>	
+</resources>
