@@ -19,3 +19,4 @@ Contributing
 Have an idea? I would love to hear any feedback or ideas anyone might have.
 
 This project is available on [GitHub](https://github.com/jhannah01/WifiGraph) as well as [Gitorious](https://gitorious.org/wifigraph/wifigraph)
+
