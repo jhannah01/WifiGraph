@@ -26,7 +26,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:text="@string/filler_child_level" />
+            android:text="@string/filler_level" />
     </LinearLayout>
 
     <LinearLayout
@@ -49,7 +49,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:text="@string/filler_child_frequency" />
+            android:text="@string/filler_frequency" />
     </LinearLayout>
 
     <LinearLayout
@@ -73,7 +73,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="2dp"
-            android:text="@string/filler_child_capabilities" />
+            android:text="@string/filler_capabilities" />
     </LinearLayout>
 
     <LinearLayout

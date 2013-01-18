@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.DebugActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textview_debug_database_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filler_database_count"/>
+
+        <Button
+            android:id="@+id/btn_debug_update_database_records_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="Update Record Count"/>
+
+        <TextView
+            android:id="@+id/textview_debug_scan_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/filler_scan_interval"/>
+
+        <Button
+            android:id="@+id/btn_debug_update_scan_interval"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="Update Scan Interval"/>
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_debug_records"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linearLayout2"
+        android:layout_below="@+id/linearLayout1">
+
+    </ListView>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_debug_main"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="@string/menu_title_home"/>
+
+        <Button
+            android:id="@+id/btn_debug_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="@string/menu_title_overview"/>
+
+        <Button
+            android:id="@+id/btn_debug_graph"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="@string/menu_title_graph_activity"/>
+
+        <Button
+            android:id="@+id/btn_debug_add_fake_nets"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="@string/label_debug_add_fake_networks"/>
+
+        <Button
+            android:id="@+id/btn_debug_exit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="handleButtonClick"
+            android:text="@string/menu_title_exit"/>
+    </LinearLayout>
+
+</RelativeLayout>

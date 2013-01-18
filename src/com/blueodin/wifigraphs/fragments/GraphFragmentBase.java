@@ -9,10 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.blueodin.wifigraphs.WifiGraphInterface;
 import com.blueodin.wifigraphs.R;
 
-public abstract class GraphFragmentBase extends Fragment implements WifiGraphInterface {
+public abstract class GraphFragmentBase extends Fragment implements IGraphFragment {
 	protected final boolean mUseViewGroup = true;
 
 	@Override

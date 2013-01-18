@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+ 	<LinearLayout
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="wrap_content"
+ 	    android:orientation="horizontal" >
+
+ 	    <TextView
+ 	        android:layout_width="wrap_content"
+ 			android:layout_height="wrap_content"
+ 			android:text="@string/label_network_detail_header"/>
+ 		<TextView 
+ 	    	android:id="@+id/textview_network_list_header"
+	 	    android:layout_width="wrap_content"
+	 	    android:layout_height="wrap_content"
+	 	    android:text="@string/filler_network_detail_header"/>
+
+	</LinearLayout>
+
+ 	<TextView
+ 	    android:id="@+id/textview_network_list_overview"
+ 	    android:layout_width="wrap_content"
+ 	    android:layout_height="wrap_content"
+ 	    android:layout_marginLeft="25dp"
+ 	    android:text="@string/filler_network_detail_overview" />
+
+ 	<LinearLayout
+ 	    android:id="@+id/layout_detail_graph_holder"
+ 	    android:layout_width="fill_parent"
+ 	    android:layout_height="fill_parent"
+ 	    android:orientation="vertical"/>
+</LinearLayout>

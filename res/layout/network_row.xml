@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res/com.blueodin.wifigraphs"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="6"
+    android:orientation="horizontal"
+    android:rowCount="2"
+    android:useDefaultMargins="true"
+    tools:context=".providers.NetworkResultsAdapter">
+
+    <ImageView
+        android:id="@+id/iv_row_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="0"
+        android:layout_gravity="center_vertical"
+        android:layout_row="0"
+        android:layout_rowSpan="2"
+        android:contentDescription="@string/description_network_icon"
+        android:src="@drawable/ic_bars_orange"/>
+
+    <TextView
+        android:id="@+id/tv_row_ssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:layout_gravity="center_vertical"
+        android:layout_row="0"
+        android:layout_rowSpan="2"
+        android:text="@string/filler_ssid"/>
+
+    <TextView
+        android:id="@+id/tv_row_bssid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="2"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="5dp"
+        android:layout_row="0"
+        android:layout_rowSpan="2"
+        android:text="@string/filler_bssid"/>
+
+    <com.blueodin.wifigraphs.widgets.LabeledTextView
+        android:id="@+id/tv_row_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="4"
+        android:layout_row="0"
+        android:text="@string/filler_level"
+        app:labelText="@string/label_level"/>
+
+    <com.blueodin.wifigraphs.widgets.LabeledTextView
+        android:id="@+id/tv_row_frequency"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="3"
+        android:layout_row="1"
+        android:text="@string/filler_frequency"
+        app:labelText="@string/label_frequency"/>
+
+    <com.blueodin.wifigraphs.widgets.LabeledTextView
+        android:id="@+id/tv_row_security"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="4"
+        android:layout_row="1"
+        android:text="@string/filler_capabilities"
+        app:labelText="@string/label_capabilities"/>
+
+    <com.blueodin.wifigraphs.widgets.LabeledTextView
+        android:id="@+id/tv_row_timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="5"
+        android:layout_gravity="right|top"
+        android:layout_row="0"
+        android:text="@string/filler_timestamp"
+        app:labelText="@string/label_timestamp"/>
+</GridLayout>

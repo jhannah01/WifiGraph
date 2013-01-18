@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<previews>
+    <preview
+        name="Nexus One"
+        config="layout-sw320dp-w533dp-h320dp-normal-long-land-notnight-hdpi-finger-keyssoft-nokeys-navhidden-trackball-800x480-v17"
+        device="Nexus One"
+        devicestate="Landscape"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+    <preview
+        name="Asus TF700T"
+        config="layout-sw1080dp-w1920dp-h1080dp-xlarge-long-land-notnight-mdpi-finger-keyshidden-qwerty-navhidden-nonav-1920x1080-v17"
+        device="Asus TF700T"
+        devicestate="Landscape"
+        target="Android 4.2"
+        theme="@android:style/Theme.Holo" >
+    </preview>
+</previews>

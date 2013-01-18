@@ -1,0 +1,42 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/menu_toggle_scanning"
+	    android:title="@string/menu_title_toggle_scanning"
+	    android:showAsAction="always"
+	    android:checkable="true"
+	    android:icon="@drawable/ic_wifi_toggle"/>
+        
+    <item android:id="@+id/menu_open_overview_activity"
+        android:title="@string/menu_title_overview"
+        android:showAsAction="ifRoom"
+        android:icon="@drawable/ic_action_cloud"/>
+        
+    <item android:id="@+id/menu_open_graph_activity"
+	    android:title="@string/menu_title_graph_activity"
+	    android:showAsAction="ifRoom|withText"
+	    android:icon="@drawable/ic_bars_green"/>
+	
+	<item android:id="@+id/menu_new_graph_window"
+	    android:title="@string/menu_title_graph_windows_new"
+	    android:showAsAction="ifRoom"
+	    android:icon="@drawable/ic_action_signal"/>
+	
+	<item android:id="@+id/menu_close_graph_windows"
+	    android:title="@string/menu_title_graph_windows_close"
+		android:showAsAction="ifRoom"
+	    android:icon="@android:drawable/ic_menu_delete"/>
+	
+    <item android:id="@+id/menu_settings"
+        android:title="@string/menu_title_settings"
+        android:showAsAction="ifRoom"
+        android:icon="@android:drawable/ic_menu_preferences"/>
+    
+    <item android:id="@+id/menu_open_debug_activity" 
+        android:title="@string/menu_title_debug" 
+        android:showAsAction="never" 
+        android:icon="@android:drawable/ic_partial_secure"/>
+    
+	<item android:id="@+id/menu_exit"
+		android:title="@string/menu_title_exit"
+		android:showAsAction="never"
+		android:icon="@drawable/ic_action_exit"/>
+</menu>
