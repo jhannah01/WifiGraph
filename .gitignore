@@ -22,3 +22,6 @@ local.properties
 # VIM swap files
 .*.sw[po]
 _*.sw[po]
+
+# Old source files
+old/
